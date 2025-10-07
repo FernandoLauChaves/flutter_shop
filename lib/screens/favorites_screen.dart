@@ -261,6 +261,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                                   product: product,
                                   onTap: () =>
                                       _navigateToProductDetail(product),
+                                  onFavoriteToggled: _loadFavorites,
                                 );
                               },
                             );

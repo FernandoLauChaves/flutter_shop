@@ -3,6 +3,7 @@ import 'theme/app_theme.dart';
 import 'services/auth_service.dart';
 import 'screens/login_screen.dart';
 import 'screens/home_screen.dart';
+import 'screens/splash_screen.dart';
 
 void main() {
   runApp(const FlutterStoreApp());
@@ -17,7 +18,11 @@ class FlutterStoreApp extends StatelessWidget {
       title: 'Flutter Store',
       theme: AppTheme.darkTheme,
       debugShowCheckedModeBanner: false,
-      home: const AuthWrapper(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const SplashScreen(),
+        '/home': (context) => const AuthWrapper(),
+      },
     );
   }
 }

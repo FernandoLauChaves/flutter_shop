@@ -6,12 +6,14 @@ class ProductCard extends StatefulWidget {
   final Product product;
   final VoidCallback? onTap;
   final bool showFavoriteButton;
+  final VoidCallback? onFavoriteToggled;
 
   const ProductCard({
     super.key,
     required this.product,
     this.onTap,
     this.showFavoriteButton = true,
+    this.onFavoriteToggled,
   });
 
   @override
@@ -49,7 +51,9 @@ class _ProductCardState extends State<ProductCard> {
       setState(() {
         _isFavorite = !_isFavorite;
       });
-
+      if (widget.onFavoriteToggled != null) {
+        widget.onFavoriteToggled!();
+      }
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

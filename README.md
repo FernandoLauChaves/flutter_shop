@@ -167,6 +167,7 @@ dependencies:
    ```
 
 4. **Execute o aplicativo**
+   O app inicia exibindo a SplashScreen animada antes de ir para a tela principal.
    ```bash
    flutter run
    ```
@@ -187,6 +188,10 @@ flutter test
 ```
 
 ## 📱 Telas Implementadas
+
+### 0. SplashScreen
+- ✅ Tela inicial animada com ícone e carregamento
+- ✅ Transição automática para a tela principal após alguns segundos
 
 ### 1. Tela de Cadastro
 - ✅ Campos: Nome, e-mail, senha, confirmação
@@ -225,7 +230,7 @@ flutter test
 - ✅ Lista de produtos favoritados
 - ✅ Filtros integrados (mesmo padrão da tela de produtos)
 - ✅ Ordenação por data de adição
-- ✅ Atualização automática
+- ✅ Atualização automática e instantânea ao desfavoritar
 - ✅ Grid responsivo
 
 ### 7. Tela de Sobre
