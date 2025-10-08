@@ -8,6 +8,7 @@ import 'home_screen.dart';
 import 'products_screen.dart';
 import 'about_screen.dart';
 import '../components/filter_bar.dart'; // Added import for FilterBar
+import '../services/favorites_notifier.dart'; // Added import for FavoritesNotifier
 
 class FavoritesScreen extends StatefulWidget {
   const FavoritesScreen({super.key});
@@ -35,6 +36,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
   @override
   void initState() {
     super.initState();
+    FavoritesNotifier().loadFavorites();
     _loadFavorites();
   }
 
@@ -127,13 +129,17 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     );
   }
 
-  void _navigateToProductDetail(Product product) {
-    Navigator.push(
+  void _navigateToProductDetail(Product product) async {
+    await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ProductDetailScreen(product: product),
+        builder: (context) => ProductDetailScreen(
+          product: product,
+          onFavoriteToggled: _loadFavorites,
+        ),
       ),
     );
+    _loadFavorites();
   }
 
   @override

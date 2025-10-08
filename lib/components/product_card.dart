@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/product.dart';
-import '../services/favorites_service.dart';
+import '../services/favorites_notifier.dart';
 
 class ProductCard extends StatefulWidget {
   final Product product;
@@ -21,68 +21,16 @@ class ProductCard extends StatefulWidget {
 }
 
 class _ProductCardState extends State<ProductCard> {
-  bool _isFavorite = false;
   bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
-    _checkFavoriteStatus();
   }
 
-  Future<void> _checkFavoriteStatus() async {
-    final isFavorite = await FavoritesService.isFavorite(widget.product.id);
-    if (mounted) {
-      setState(() {
-        _isFavorite = isFavorite;
-      });
-    }
-  }
-
-  Future<void> _toggleFavorite() async {
-    if (_isLoading) return;
-
-    setState(() {
-      _isLoading = true;
-    });
-
-    try {
-      await FavoritesService.toggleFavorite(widget.product.id);
-      setState(() {
-        _isFavorite = !_isFavorite;
-      });
-      if (widget.onFavoriteToggled != null) {
-        widget.onFavoriteToggled!();
-      }
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              _isFavorite
-                  ? 'Produto adicionado aos favoritos!'
-                  : 'Produto removido dos favoritos!',
-            ),
-            backgroundColor: Theme.of(context).primaryColor,
-            duration: const Duration(seconds: 2),
-          ),
-        );
-      }
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Erro ao atualizar favoritos'),
-            backgroundColor: Colors.red,
-          ),
-        );
-      }
-    } finally {
-      if (mounted) {
-        setState(() {
-          _isLoading = false;
-        });
-      }
-    }
+  @override
+  void didUpdateWidget(covariant ProductCard oldWidget) {
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
@@ -111,132 +59,167 @@ class _ProductCardState extends State<ProductCard> {
       padding = 6; // Aumentado para telas médias
     }
 
-    return Card(
-      elevation: 4,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: InkWell(
-        onTap: widget.onTap,
-        borderRadius: BorderRadius.circular(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Imagem do produto
-            ClipRRect(
-              borderRadius: const BorderRadius.vertical(
-                top: Radius.circular(16),
-              ),
-              child: SizedBox(
-                height: imageHeight,
-                width: double.infinity,
-                child: Stack(
-                  children: [
-                    Image.asset(
-                      widget.product.imageUrl,
-                      height: imageHeight,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) => Container(
-                        color: Colors.grey[200],
-                        alignment: Alignment.center,
-                        child: const Icon(
-                          Icons.broken_image,
-                          size: 40,
-                          color: Colors.grey,
+    return AnimatedBuilder(
+      animation: FavoritesNotifier(),
+      builder: (context, _) {
+        final isFavorite = FavoritesNotifier().isFavorite(widget.product.id);
+        return Card(
+          elevation: 4,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: InkWell(
+            onTap: widget.onTap,
+            borderRadius: BorderRadius.circular(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Imagem do produto
+                ClipRRect(
+                  borderRadius: const BorderRadius.vertical(
+                    top: Radius.circular(16),
+                  ),
+                  child: SizedBox(
+                    height: imageHeight,
+                    width: double.infinity,
+                    child: Stack(
+                      children: [
+                        Image.asset(
+                          widget.product.imageUrl,
+                          height: imageHeight,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) =>
+                              Container(
+                                color: Colors.grey[200],
+                                alignment: Alignment.center,
+                                child: const Icon(
+                                  Icons.broken_image,
+                                  size: 40,
+                                  color: Colors.grey,
+                                ),
+                              ),
                         ),
-                      ),
-                    ),
-                    // Botão de favorito
-                    if (widget.showFavoriteButton)
-                      Positioned(
-                        top: 8,
-                        right: 8,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white.withValues(alpha: 0.9),
-                            shape: BoxShape.circle,
-                          ),
-                          child: IconButton(
-                            icon: _isLoading
-                                ? SizedBox(
-                                    width: 20,
-                                    height: 20,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                      valueColor: AlwaysStoppedAnimation<Color>(
-                                        theme.primaryColor,
+                        if (widget.showFavoriteButton)
+                          Positioned(
+                            top: 8,
+                            right: 8,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white.withValues(alpha: 0.9),
+                                shape: BoxShape.circle,
+                              ),
+                              child: IconButton(
+                                icon: _isLoading
+                                    ? SizedBox(
+                                        width: 20,
+                                        height: 20,
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 2,
+                                          valueColor:
+                                              AlwaysStoppedAnimation<Color>(
+                                                theme.primaryColor,
+                                              ),
+                                        ),
+                                      )
+                                    : Icon(
+                                        isFavorite
+                                            ? Icons.favorite
+                                            : Icons.favorite_border,
+                                        color: isFavorite
+                                            ? Colors.red
+                                            : theme.primaryColor,
+                                        size: 20,
                                       ),
-                                    ),
-                                  )
-                                : Icon(
-                                    _isFavorite
-                                        ? Icons.favorite
-                                        : Icons.favorite_border,
-                                    color: _isFavorite
-                                        ? Colors.red
-                                        : theme.primaryColor,
-                                    size: 20,
-                                  ),
-                            onPressed: _toggleFavorite,
-                            padding: const EdgeInsets.all(4),
-                            constraints: const BoxConstraints(
-                              minWidth: 32,
-                              minHeight: 32,
+                                onPressed: () async {
+                                  setState(() {
+                                    _isLoading = true;
+                                  });
+                                  await FavoritesNotifier().toggleFavorite(
+                                    widget.product.id,
+                                  );
+                                  setState(() {
+                                    _isLoading = false;
+                                  });
+                                  if (widget.onFavoriteToggled != null) {
+                                    widget.onFavoriteToggled!();
+                                  }
+                                  if (mounted) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          isFavorite
+                                              ? 'Produto removido dos favoritos!'
+                                              : 'Produto adicionado aos favoritos!',
+                                        ),
+                                        backgroundColor: Theme.of(
+                                          context,
+                                        ).primaryColor,
+                                        duration: const Duration(seconds: 2),
+                                      ),
+                                    );
+                                  }
+                                },
+                                padding: const EdgeInsets.all(4),
+                                constraints: const BoxConstraints(
+                                  minWidth: 32,
+                                  minHeight: 32,
+                                ),
+                              ),
                             ),
                           ),
+                      ],
+                    ),
+                  ),
+                ),
+                // Informações do produto
+                Expanded(
+                  flex: 2,
+                  child: Padding(
+                    padding: EdgeInsets.all(padding),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        // Nome do produto
+                        Text(
+                          widget.product.name,
+                          style: TextStyle(
+                            fontSize: nameFontSize,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                      ),
-                  ],
+                        // Categoria
+                        Text(
+                          widget.product.category,
+                          style: TextStyle(
+                            fontSize: categoryFontSize,
+                            color: Colors.white70,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        // Preço
+                        Text(
+                          'R\$ ${widget.product.price.toStringAsFixed(2).replaceAll('.', ',')}',
+                          style: TextStyle(
+                            fontSize: priceFontSize,
+                            fontWeight: FontWeight.bold,
+                            color: theme.primaryColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
-
-            // Informações do produto
-            Expanded(
-              flex: 2,
-              child: Padding(
-                padding: EdgeInsets.all(padding),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment:
-                      MainAxisAlignment.spaceBetween, // Distribui o espaço
-                  children: [
-                    // Nome do produto
-                    Text(
-                      widget.product.name,
-                      style: TextStyle(
-                        fontSize: nameFontSize,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    // Categoria
-                    Text(
-                      widget.product.category,
-                      style: TextStyle(
-                        fontSize: categoryFontSize,
-                        color: Colors.white70,
-                      ), // Reduzido de 12 para 10
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    // Preço
-                    Text(
-                      'R\$ ${widget.product.price.toStringAsFixed(2).replaceAll('.', ',')}',
-                      style: TextStyle(
-                        fontSize: priceFontSize,
-                        fontWeight: FontWeight.bold,
-                        color: theme.primaryColor,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }
