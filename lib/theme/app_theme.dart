@@ -19,11 +19,9 @@ class AppTheme {
         primary: primaryColor,
         secondary: secondaryColor,
         surface: surfaceColor,
-        background: backgroundColor,
         onPrimary: Colors.white,
         onSecondary: Colors.white,
         onSurface: textPrimaryColor,
-        onBackground: textPrimaryColor,
       ),
 
       // AppBar Theme
@@ -77,7 +75,7 @@ class AppTheme {
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: primaryColor.withOpacity(0.5)),
+          borderSide: BorderSide(color: primaryColor.withValues(alpha: 0.5)),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),

@@ -183,7 +183,9 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                       Text(
                         '${_filteredProducts.length} produtos favoritados',
                         style: theme.textTheme.bodyMedium?.copyWith(
-                          color: theme.colorScheme.onSurface.withOpacity(0.7),
+                          color: theme.colorScheme.onSurface.withValues(
+                            alpha: 0.7,
+                          ),
                         ),
                       ),
                     ],
@@ -202,24 +204,26 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                               Icon(
                                 Icons.search_off,
                                 size: 64,
-                                color: theme.colorScheme.onSurface.withOpacity(
-                                  0.5,
+                                color: theme.colorScheme.onSurface.withValues(
+                                  alpha: 0.5,
                                 ),
                               ),
                               const SizedBox(height: 16),
                               Text(
                                 'Nenhum produto encontrado',
                                 style: theme.textTheme.titleLarge?.copyWith(
-                                  color: theme.colorScheme.onSurface
-                                      .withOpacity(0.7),
+                                  color: theme.colorScheme.onSurface.withValues(
+                                    alpha: 0.7,
+                                  ),
                                 ),
                               ),
                               const SizedBox(height: 8),
                               Text(
                                 'Tente ajustar os filtros',
                                 style: theme.textTheme.bodyMedium?.copyWith(
-                                  color: theme.colorScheme.onSurface
-                                      .withOpacity(0.5),
+                                  color: theme.colorScheme.onSurface.withValues(
+                                    alpha: 0.5,
+                                  ),
                                 ),
                               ),
                             ],

@@ -67,17 +67,19 @@ class AuthService {
   }) async {
     final users = await _getUsers();
 
-    final user = users.firstWhere(
-      (user) => user.email == email,
-      orElse: () => throw Exception('User not found'),
-    );
-
-    if (user.password == password) {
-      await setCurrentUser(user);
-      return user;
+    try {
+      final user = users.firstWhere((user) => user.email == email);
+      if (user.password == password) {
+        await setCurrentUser(user);
+        return user;
+      } else {
+        // Password incorrect
+        return null;
+      }
+    } catch (e) {
+      // User not found
+      return null;
     }
-
-    throw Exception('Invalid password');
   }
 
   static Future<bool> emailExists(String email) async {

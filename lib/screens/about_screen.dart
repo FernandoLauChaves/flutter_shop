@@ -54,7 +54,7 @@ class AboutScreen extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                      color: theme.primaryColor.withOpacity(0.1),
+                      color: theme.primaryColor.withValues(alpha: 0.1),
                       shape: BoxShape.circle,
                     ),
                     child: Icon(
@@ -75,7 +75,7 @@ class AboutScreen extends StatelessWidget {
                   Text(
                     'Versão 1.0.0',
                     style: theme.textTheme.titleMedium?.copyWith(
-                      color: theme.colorScheme.onSurface.withOpacity(0.7),
+                      color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
                     ),
                   ),
                 ],
@@ -90,7 +90,9 @@ class AboutScreen extends StatelessWidget {
               decoration: BoxDecoration(
                 color: theme.colorScheme.surface,
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: theme.primaryColor.withOpacity(0.2)),
+                border: Border.all(
+                  color: theme.primaryColor.withValues(alpha: 0.2),
+                ),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -133,7 +135,9 @@ class AboutScreen extends StatelessWidget {
               decoration: BoxDecoration(
                 color: theme.colorScheme.surface,
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: theme.primaryColor.withOpacity(0.2)),
+                border: Border.all(
+                  color: theme.primaryColor.withValues(alpha: 0.2),
+                ),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -172,7 +176,9 @@ class AboutScreen extends StatelessWidget {
               decoration: BoxDecoration(
                 color: theme.colorScheme.surface,
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: theme.primaryColor.withOpacity(0.2)),
+                border: Border.all(
+                  color: theme.primaryColor.withValues(alpha: 0.2),
+                ),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -217,9 +223,11 @@ class AboutScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: theme.colorScheme.background,
+                color: theme.colorScheme.surface,
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: theme.primaryColor.withOpacity(0.2)),
+                border: Border.all(
+                  color: theme.primaryColor.withValues(alpha: 0.2),
+                ),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -255,14 +263,14 @@ class AboutScreen extends StatelessWidget {
                   Text(
                     '© 2024 Flutter Store',
                     style: theme.textTheme.bodyMedium?.copyWith(
-                      color: theme.colorScheme.onSurface.withOpacity(0.7),
+                      color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
                     ),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     'Desenvolvido com ❤️ usando Flutter',
                     style: theme.textTheme.bodySmall?.copyWith(
-                      color: theme.colorScheme.onSurface.withOpacity(0.5),
+                      color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
                     ),
                   ),
                 ],

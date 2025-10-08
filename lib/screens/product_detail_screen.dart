@@ -104,7 +104,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
+                    color: Colors.black.withValues(alpha: 0.1),
                     blurRadius: 10,
                     offset: const Offset(0, 5),
                   ),
@@ -157,7 +157,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
+                    color: Colors.black.withValues(alpha: 0.1),
                     blurRadius: 10,
                     offset: const Offset(0, -5),
                   ),
@@ -175,10 +175,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         vertical: 6,
                       ),
                       decoration: BoxDecoration(
-                        color: theme.primaryColor.withOpacity(0.1),
+                        color: theme.primaryColor.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
-                          color: theme.primaryColor.withOpacity(0.3),
+                          color: theme.primaryColor.withValues(alpha: 0.3),
                         ),
                       ),
                       child: Text(
@@ -233,10 +233,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: theme.colorScheme.background,
+                        color: theme.colorScheme.surface,
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(
-                          color: theme.primaryColor.withOpacity(0.2),
+                          color: theme.primaryColor.withValues(alpha: 0.2),
                         ),
                       ),
                       child: Column(

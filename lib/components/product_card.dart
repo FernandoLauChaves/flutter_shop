@@ -152,7 +152,7 @@ class _ProductCardState extends State<ProductCard> {
                         right: 8,
                         child: Container(
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.9),
+                            color: Colors.white.withValues(alpha: 0.9),
                             shape: BoxShape.circle,
                           ),
                           child: IconButton(
@@ -206,7 +206,7 @@ class _ProductCardState extends State<ProductCard> {
                       style: TextStyle(
                         fontSize: nameFontSize,
                         fontWeight: FontWeight.w600,
-                        color: Colors.black87,
+                        color: Colors.white,
                       ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
@@ -216,7 +216,7 @@ class _ProductCardState extends State<ProductCard> {
                       widget.product.category,
                       style: TextStyle(
                         fontSize: categoryFontSize,
-                        color: Colors.grey[600],
+                        color: Colors.white70,
                       ), // Reduzido de 12 para 10
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,

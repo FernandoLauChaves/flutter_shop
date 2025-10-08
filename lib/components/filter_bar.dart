@@ -28,7 +28,7 @@ class FilterBar extends StatelessWidget {
         color: theme.colorScheme.surface,
         border: Border(
           bottom: BorderSide(
-            color: theme.primaryColor.withOpacity(0.2),
+            color: theme.primaryColor.withValues(alpha: 0.2),
             width: 1,
           ),
         ),
@@ -49,10 +49,10 @@ class FilterBar extends StatelessWidget {
                       vertical: 8,
                     ),
                     decoration: BoxDecoration(
-                      color: theme.primaryColor.withOpacity(0.1),
+                      color: theme.primaryColor.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(
-                        color: theme.primaryColor.withOpacity(0.3),
+                        color: theme.primaryColor.withValues(alpha: 0.3),
                       ),
                     ),
                     child: Row(
@@ -98,10 +98,10 @@ class FilterBar extends StatelessWidget {
                       vertical: 8,
                     ),
                     decoration: BoxDecoration(
-                      color: theme.primaryColor.withOpacity(0.1),
+                      color: theme.primaryColor.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(
-                        color: theme.primaryColor.withOpacity(0.3),
+                        color: theme.primaryColor.withValues(alpha: 0.3),
                       ),
                     ),
                     child: Row(
@@ -145,6 +145,7 @@ class FilterBar extends StatelessWidget {
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       isScrollControlled: true,
+      useRootNavigator: true, // future-proof for nested navigators
       builder: (context) => Container(
         constraints: BoxConstraints(maxHeight: maxHeight),
         padding: const EdgeInsets.all(20),
@@ -203,6 +204,7 @@ class FilterBar extends StatelessWidget {
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       isScrollControlled: true,
+      useRootNavigator: true, // future-proof for nested navigators
       builder: (context) => Container(
         constraints: BoxConstraints(maxHeight: maxHeight),
         padding: const EdgeInsets.all(20),

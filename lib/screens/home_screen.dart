@@ -54,7 +54,12 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _showUserInfo() {
-    showDialog(context: context, builder: (context) => const UserInfoDialog());
+    showDialog(
+      context: context,
+      builder: (context) => const UserInfoDialog(),
+      barrierDismissible: true, // recommended for dialogs
+      useRootNavigator: true, // future-proof for nested navigators
+    );
   }
 
   void _navigateToProducts() {
@@ -178,8 +183,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 end: Alignment.bottomCenter,
                                                 colors: [
                                                   Colors.transparent,
-                                                  Colors.black.withOpacity(
-                                                    0.85,
+                                                  Colors.black.withValues(
+                                                    alpha: 0.85,
                                                   ),
                                                 ],
                                               ),
@@ -205,7 +210,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   product.description,
                                                   style: TextStyle(
                                                     color: Colors.white
-                                                        .withOpacity(0.85),
+                                                        .withValues(
+                                                          alpha: 0.85,
+                                                        ),
                                                     fontSize: 13,
                                                   ),
                                                   maxLines: 3,
